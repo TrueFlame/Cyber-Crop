@@ -1,0 +1,10 @@
+class SensorSection(Type,ID,Model):
+    self.Type=Type
+    self.ID=ID
+    self.Model=Model
+    
+   def CheckPrivilege(AccountPrivilege):
+   def ReturnPrivilege(AccountPrivilege):
+   def CheckSensor():
+   def SensorInfo(expanse):
+   def SensorError():
