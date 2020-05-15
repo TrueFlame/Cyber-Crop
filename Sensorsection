@@ -4,7 +4,12 @@ class SensorSection(Type,ID,Model):
     self.Model=Model
     
    def CheckPrivilege(AccountPrivilege):
+       pass
    def ReturnPrivilege(AccountPrivilege):
+       pass
    def CheckSensor():
+       pass
    def SensorInfo(expanse):
+       pass
    def SensorError():
+       pass
