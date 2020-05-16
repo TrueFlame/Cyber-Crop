@@ -1,4 +1,4 @@
-class Camera(camera_id, model, type):
+class Camera:
 	def __init__(self, camera_id, model, type):
 		self.camera_id = camera_id
 		self.model = model
