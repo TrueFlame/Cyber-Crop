@@ -1,7 +1,8 @@
-class SensorSection(Type,ID,Model):
-    self.Type=Type
-    self.ID=ID
-    self.Model=Model
+class SensorSection():
+    def __init__(self, Type, ID, Model):
+		self.Type=Type
+		self.ID=ID
+		self.Model=Model
     
    def CheckPrivilege(AccountPrivilege):
        pass
