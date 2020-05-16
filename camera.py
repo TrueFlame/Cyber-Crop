@@ -1,7 +1,8 @@
 class Camera(camera_id, model, type):
-	self.camera_id = camera_id
-	self.model = model
-	self.type = type
+	def __init__(self, camera_id, model, type):
+		self.camera_id = camera_id
+		self.model = model
+		self.type = type
 	
 	import cv2
 	from tkinter import *
