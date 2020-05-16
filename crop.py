@@ -1,5 +1,5 @@
 class crop():
-    def __init__(self, crop_id, type, name, size, est_yield):
+    def __init__(self, crop_id, type, name, size, est_yield): # this is the correct way
 		self.crop_id = crop_id
 		self.type = type
 		self.name = name
