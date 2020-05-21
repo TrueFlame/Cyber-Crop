@@ -1,8 +1,8 @@
-class expanse:
-    def __init__(self, exp_id, size, longitude, latitude):
+class Expanse:
+    def __init__(self, exp_id: int, size: float, longitude: float, latitude: float):
         self.exp_id = exp_id
         self.size = size
         self. longitude = longitude
         self.latitude = latitude 
 
-area1 = expanse(0, 100, 7.9635, 8.0912)
+
