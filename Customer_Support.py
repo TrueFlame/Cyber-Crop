@@ -8,9 +8,10 @@ class Customer_Support:
 		telephone3  = "210879634"
 		print(telephone1, telephone2, telephone3)
 	
-	def Choose_Category()
+	def Choose_Category():
 		print("Choose your desired category...")
 		pass
 	
-	return SuccessCode():
-		continue
+	def SuccessCode():
+		pass
+
