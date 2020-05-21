@@ -1,33 +1,32 @@
 class Greenhouse():
     def __init__(self, ID, AccountPrivilege, ExpanseID, SensorID):
-		self.AccountPrivilege=AccountPrivilege
-		self.ExpanseID=ExpanseID
-		self.ID=ID
-		self.SensorID=SensorID
+        self.AccountPrivilege=AccountPrivilege
+        self.ExpanseID=ExpanseID
+        self.ID=ID
+        self.SensorID=SensorID
 		
     def CheckPrivilege(AccountPrivilege):
-		pass
+    		pass
     def ReturnPrivilege(AccountPrivilege):
-		pass
+    		pass
     def ChooseExpanse(ExpanseID):
-		pass
+    		pass
     def ReturnErrorCode():
-		pass
+    		pass
     def InsertData(ExpanseID):
-		pass
+    		pass
     def ChooseOption():
-		pass
+    		pass
     def CheckSensor(SensorID):
-		pass
+    		pass
     def ReturnStatus(SensorID):
-		pass
+    		pass
     def Initialize():
-		pass
+    		pass
     def DisplayStatus(ID):
-		pass
+    		pass
     def EditStatus(ID):
-		pass
+    		pass
     def AutomaticManagement(ID):
-		pass
-
+    		pass
 
