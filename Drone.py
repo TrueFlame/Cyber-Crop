@@ -1,24 +1,24 @@
 class Drone():
     def __init__(self, Type, ID, Model, Water_Capacity, Chemical_Capacity):
-		self.Type=Type
-		self.ID=ID
-		self.Model=Model
-		self.Water_Capacity=Water_Capacity
-		self.Chemical_Capacity=Chemical_Capacity
-    
+        self.Type=Type
+        self.ID=ID
+        self.Model=Model
+        self.Water_Capacity=Water_Capacity
+        self.Chemical_Capacity=Chemical_Capacity
+
     def CheckPrivilege(AccountPrivilege):
-		pass
+    		pass
     def ReturnPrivilege(AccountPrivilege):
-		pass
+    		pass
     def CheckDatabase():
-		pass
+    		pass
     def AreaSelect(expanse):
-		pass
+    		pass
     def ChooseOption(option):
-		pass
+    		pass
     def LiveFeeding(expanse):
-		pass
+    		pass
     def Spray(expanse,Chemical_Capacity):
-		pass
+    		pass
     def Sprinkling(expanse,Water_Capacity):
-		pass
+    		pass
