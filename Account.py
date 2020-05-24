@@ -1,6 +1,7 @@
 import tkinter
 from tkinter import ttk
-
+from expanse import Expanse
+from crop import Crop
 
 class Account:
 
@@ -19,25 +20,13 @@ class Account:
     def Upgrade(e_mail,password,FirstName,Certificate,BusinessName):
         pass
     
+    def ReturnPrivillege():
+        pass
+    def CheckPrivillege():
+        pass
  
- 
+crop10 = Crop(4, "type", "name", 5, "est_yield", "longitude", "latitude")
 
-class Amateur(Account):
-    def __init__(self, FirstName: str , LastName: str, Certificate: str , BusinessName: str, e_mail: str, password: str): 
-        super().__init__(FirstName, LastName, Certificate, BusinessName, e_mail, password)
-        self.account_privillege = 'Amateur' # static variable
-    
-class Professional(Account):
-    def __init__(self, FirstName: str , LastName: str, Certificate: str , BusinessName: str, e_mail: str, password: str): 
-        super().__init__(FirstName, LastName, Certificate, BusinessName, e_mail, password)
-        self.account_privillege = 'Professional'
-    
-class Business(Account):
-    def __init__(self, FirstName: str , LastName: str, Certificate: str , BusinessName: str, e_mail: str, password: str): 
-        super().__init__(FirstName, LastName, Certificate, BusinessName, e_mail, password)
-        self.account_privillege = 'Business'
-    
-    
-    
-business1 = Business("andreoulis1996@gmail,com", "Adr5njbfas", "FirstName", "LastName", "Certificate", "BusinessName")
-print(business1.account_privillege)
+print(crop10.crop_id)
+
+
