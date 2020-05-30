@@ -1,5 +1,5 @@
 class SensorSection():
-    def __init__(self, Type, ID, Model):
+    def __init__(self, Type, ID, Model, Install, Humiidity, Temp, sun_exposure):
 		self.Type=Type
 		self.ID=ID
 		self.Model=Model
