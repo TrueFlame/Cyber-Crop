@@ -1,10 +1,10 @@
 class SensorSection():
-    def __init__(self, Type, ID, Model, Install, Humiidity, Temp, sun_exposure):
+    def __init__(self, Type, ID, Model, Install, Humidity, Temp, sun_exposure):
 		self.Type=Type
 		self.ID=ID
 		self.Model=Model
 		self.Install=Install
-        	self.Humiidity=Humiidity
+        	self.Humidity=Humidity
         	self.Temp=Temp
         	self.sun_exposure=sun_exposure
     
@@ -23,10 +23,10 @@ class SensorSection():
        pass
    def SensorInfo(expanse):
 		self.Install=Install
-		self.Humiidity=Humiidity
+		self.Humidity=Humidity
 		self.Temp=Temp
 		self.sun_exposure=sun_exposure
-		print("Humidity:" Humiidity, "Temperature:" Temp, "Sun Exposure: " sun_exposure)
+		print("Humidity:" Humidity, "Temperature:" Temp, "Sun Exposure: " sun_exposure)
        pass
    def SensorError():
 		If Install = True:
@@ -35,4 +35,4 @@ class SensorSection():
 
 
 sensor = SensorSection(type,ID,Model)
-info = SensorInfo(Humiidity,Temp,sun_exposure)    
+info = SensorInfo(Humidity,Temp,sun_exposure)    
