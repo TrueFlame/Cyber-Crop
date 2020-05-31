@@ -14,6 +14,6 @@ Potato = Ideal_Crop("Potato",1,10,2,20,30,["x","y","z"],["tip1","tip2","tip3"])
 Cucumber = Ideal_Crop("Cucumber",1,10,2,20,30,["x","y","z"],["tip1","tip2","tip3"])
 Green_Pepper = Ideal_Crop("Green Pepper",1,10,2,20,30,["x","y","z"],["tip1","tip2","tip3"])\
 
-    def show_ideal_crop(crop_name):
-        pass
+def show_ideal_crop(crop_name):
+    pass
     
