@@ -7,16 +7,8 @@ class History():#Χρειάζεται εισαγωγή δεδομένων από
 
 #Ίσως χρειαστεί συνάρτηση που θα την χρησιμοποιούν οι άλλες κλασεις για αποθήκευση του ιστορικού
 
-    def CheckPrivilege(AccountPrivilege): #Έλεγχος δικαιωμάτων πρόσβασης του χρήστη στην υπηρεσία
-        pass
     
     def ReturnPrivilege(AccountPrivilege): #Επιστροφή των δικαιωμάτων του χρήστη μέσω συνάρτησης
-        pass
-    
-    def ChooseExpanse(ExpanseID): #Επιλογή έκτασης
-        pass
-    
-    def ReturnErrorCode(): #Debug συνάρτηση
         pass
     
     def ChooseOption(): #Συνάρτηση που εμφανίζει και διαχειρίζεται τις επιλογές του χρήστη
