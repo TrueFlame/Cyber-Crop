@@ -1,14 +1,16 @@
 import tkinter as tk
-from tkinter import ttk
-from PIL import Image, ImageTk
+import sys
 
+#############################
+from tkinter import ttk
+from tkinter import messagebox
+from PIL import Image, ImageTk
 
 ##################
 
 from Account import *
 
 ############################
-
 
 
 class CyberCrop(tk.Tk):
@@ -18,7 +20,7 @@ class CyberCrop(tk.Tk):
         self._frame = None
         
         self.characteristics()
-        
+        self.bind("<Escape>", self.exit_question)
         self.switch_frame(LogInGUI)
         
 
@@ -28,8 +30,7 @@ class CyberCrop(tk.Tk):
             self._frame.destroy()
         self._frame = new_frame
         self._frame.pack()
-
-
+        
 
     def displayUpgrade(self):
         newWindow = tk.Toplevel(self)
@@ -44,20 +45,30 @@ class CyberCrop(tk.Tk):
         buttonExample.pack()
         button1.pack()
 
-
+    def exit_question(self, event):
+        if tk.messagebox.askokcancel("Quit", "Do you really wish to quit?"):
+            self.withdraw()
+            self.destroy()
+    
     def characteristics(self):
         self.resizable()
         self.title("Cyber Crop")
-        self.geometry("640x480")
+        self.geometry("720x640")
         self.configure(background = "white")
         self.iconbitmap("logo.ico")
-        
-        
     
 class LogInGUI(tk.Frame):
   
     def __init__(self, master):
         tk.Frame.__init__(self, master)
+        
+        master.title("Cyber Crop - Log In")
+        
+        ############ styles to be used with entries
+        entry_style_black = ttk.Style()
+        entry_style_black.configure("Black.TEntry", foreground = "black")
+        entry_style_grey = ttk.Style()
+        entry_style_grey.configure("Grey.TEntry", foreground = "grey")
         
         
         ################# make the text blink
@@ -66,11 +77,12 @@ class LogInGUI(tk.Frame):
             if username.get() == 'Enter your username...':
                 username.delete(0, "end") # delete all the text in the entry
                 username.insert(0, '') #Insert blank for user input
-                username.config(fg = 'black')
+                username.configure(style = "Black.TEntry")
+        
         def on_focusout_username(event):
             if username.get() == '':
                 username.insert(0, 'Enter your username...')
-                username.config(fg = 'grey')
+                username.configure(style = "Grey.TEntry")
                 
                 
         def on_entry_click_password(event):
@@ -78,11 +90,11 @@ class LogInGUI(tk.Frame):
             if password.get() == 'Enter your password...':
                 password.delete(0, "end") # delete all the text in the entry
                 password.insert(0, '') #Insert blank for user input
-                username.config(fg = 'black')
+                username.configure(style = "Black.TEntry")
         def on_focusout_password(event):
             if password.get() == '':
                 password.insert(0, 'Enter your password...')
-                password.config(fg = 'grey')        
+                password.configure(style = "Black.TEntry")        
         
         ########################################################################
         
@@ -111,25 +123,28 @@ class LogInGUI(tk.Frame):
         
         # Entries
         ##################
-        username = tk.Entry(self, width = 30)
-        username.grid(row = 3, column = 2)
+        
+        '''
+        entry_style_black = ttk.Style().configure("TEntry", foreground = "black")
+        entry_style_grey = ttk.Style().configure("TEntry", foreground = "grey")
+        '''
+        username = ttk.Entry(self, width = 30)
+        username.grid(row = 3, column = 2, padx = 30)
         username.insert(0, "Enter your username...")
         
         username.bind('<FocusIn>', on_entry_click_username)
         username.bind('<FocusOut>', on_focusout_username)
-        username.config(fg = 'black')
-        
+        username.configure(style = "Black.TEntry")
         
         
         ########################
         
-        password = tk.Entry(self, width = 30, show = "*")
+        password = ttk.Entry(self, width = 30, show = "*")
         password.grid(row = 5, column = 2, padx = 30)
         password.insert(0, "Enter your password...")
         
         password.bind('<FocusIn>', on_entry_click_password)
         password.bind('<FocusOut>', on_focusout_password)
-        #password.config(fg = 'grey')
         
         
         ############################
@@ -148,14 +163,13 @@ class LogInGUI(tk.Frame):
         
         ######################################################################################################
         
-        
-        
- 
 class UpgradeGUI(tk.Frame):
     
     def __init__(self, master):
         tk.Frame.__init__(self, master)
         tk.Frame.configure(self,bg='white')
+        
+        master.title("Cyber Crop - Account Upgrade")
         
         #image2 = Image.open("bca8e31f-f7c7-4a24-9fac-5ee24e7f56d4_200x200.jpg")
         photo = ImageTk.PhotoImage(Image.open("bca8e31f-f7c7-4a24-9fac-5ee24e7f56d4_200x200.jpg"))
@@ -168,18 +182,46 @@ class UpgradeGUI(tk.Frame):
 
 class SignUpGUI(tk.Frame):
     
-    def __init__(self, master):  
+        def __init__(self, master):  
         tk.Frame.__init__(self, master)
         tk.Frame.configure(self,bg='white')
         
+        ######### title
+        master.title("Cyber Crop - Sign Up")
         
-        photo = ImageTk.PhotoImage(Image.open("bca8e31f-f7c7-4a24-9fac-5ee24e7f56d4_200x200.jpg"))
-        label1 = ttk.Label(self, image = photo)
-        label1.image = photo # εχει προβληματα με το garbage disposal και γιαυτο κραταμε μια αναφορα στην εικόνα
-        label1.pack()
+        photo = ImageTk.PhotoImage(Image.open("logo.png"))
+        image_label = ttk.Label(self, image = photo)
+        image_label.image = photo # εχει προβληματα με το garbage disposal και γιαυτο κραταμε μια αναφορα στην εικόνα
+        image_label.grid(row = 0, column = 0, columnspan = 4)
         
-        tk.Label(self, text="Sign Up", font=('Helvetica', 18, "bold")).pack(side="top", fill="x", pady=5)
-        ttk.Button(self, text="Go back to Log In", command=lambda: master.switch_frame(LogInGUI)).pack()
+        
+        ###################### info Labels
+        tk.Label(self, text="Sign Up", font=('Helvetica', 18, "bold")).grid(row = 1, column = 1,padx = 5, pady=5)
+        ttk.Label(self, text = "Username: ").grid(row = 2, column = 0, padx = 5, pady = 5)
+        ttk.Label(self, text = "Password: ").grid(row = 3, column = 0, padx = 5, pady = 5)
+        ttk.Label(self, text = "Firstname: ").grid(row = 4, column = 0, padx = 5, pady = 5)
+        ttk.Label(self, text = "Lastname: ").grid(row = 5, column = 0, padx = 5, pady = 5)
+        ttk.Label(self, text = "E-mail: ").grid(row = 6, column = 0, padx = 5, pady = 5)
+        
+        
+        ####################### info Entries
+        
+        s_username = ttk.Entry(self, width = 20)
+        s_password = ttk.Entry(self, width = 20)        
+        s_firstname = ttk.Entry(self, width = 20)
+        s_lastname = ttk.Entry(self, width = 20)
+        s_email = ttk.Entry(self, width = 20) 
+        
+        ################ put entries on the grid
+        
+        s_username.grid(row = 2, column = 1, padx = 30)
+        s_password.grid(row = 3, column = 1, padx = 30)
+        s_firstname.grid(row = 4, column = 1, padx = 30)
+        s_lastname.grid(row = 5, column = 1, padx = 30)
+        s_email.grid(row = 6, column = 1, padx = 30)
+        
+        
+        ttk.Button(self, text="Go back to Log In", command=lambda: master.switch_frame(LogInGUI)).grid(row = 9, column = 4)
 
 class WelcomeUser(tk.Frame):
     
@@ -203,17 +245,43 @@ class UserMenuGUI(tk.Frame):
         tk.Frame.__init__(self, master)
         tk.Frame.configure(self,bg='white')
         
+        master.title("User Menu")
         
-        photo = ImageTk.PhotoImage(Image.open("bca8e31f-f7c7-4a24-9fac-5ee24e7f56d4_200x200.jpg"))
+        photo = ImageTk.PhotoImage(Image.open("logo.png"))
         label1 = ttk.Label(self, image = photo)
         label1.image = photo # εχει προβληματα με το garbage disposal και γιαυτο κραταμε μια αναφορα στην εικόνα
-        label1.pack()
+        label1.grid(row = 0, column = 1)
         
-        tk.Label(self, text="User Menu", font=('Helvetica', 18, "bold")).pack(side="top", fill="x", pady=5)
-        ttk.Button(self, text="Go back to Log In", command=lambda: master.switch_frame(LogInGUI)).pack()
+        tk.Label(self, text="User Menu", font=('Helvetica', 18, "bold")).grid(row = 1, column = 1 , pady=5, padx = 5)
+        ttk.Button(self, text="Go back to Log In", command=lambda: master.switch_frame(LogInGUI)).grid(row = 2, column = 0)
+        ttk.Button(self, text = "Customer Support", command = lambda: master.switch_frame(CustomerSupportGUI)).grid(row = 3, column = 0)
 
+class CustomerSupportGUI(tk.Frame):
+    
+    def __init__(self, master):  
+        tk.Frame.__init__(self, master)
+        tk.Frame.configure(self,bg='white')
+        
+        master.title("Cyber Crop - Customer Support")
+        
+        photo = ImageTk.PhotoImage(Image.open("logo.png"))
+        label1 = ttk.Label(self, image = photo)
+        label1.image = photo # εχει προβληματα με το garbage disposal και γιαυτο κραταμε μια αναφορα στην εικόνα
+        label1.grid(row = 0, column = 1)
+        
+        customer_support_notebook = ttk.Notebook(self)
+        customer_support_notebook.grid(row = 2, column = 1)
+        
+        telephone_frame = ttk.Frame(customer_support_notebook, width = 250, height = 250)
+        email_frame = ttk.Frame(customer_support_notebook, width = 250, height = 250)
+        live_chat = ttk.Frame(customer_support_notebook, width = 250, height = 250)
+        
+        customer_support_notebook.add(telephone_frame, text = "Telephones")
+        customer_support_notebook.add(email_frame, text = "E-mail")
+        customer_support_notebook.add(live_chat, text = "Live Chat")
+        
+        tk.Label(self, text="Customer Support", font=('Helvetica', 18, "bold")).grid(row = 1, column = 1, pady=5, padx = 5)
+        ttk.Button(self, text="Go back to Log In", command=lambda: master.switch_frame(LogInGUI)).grid(row = 2, column = 0, padx = 5, pady = 5)
 
-
-
-Cyber_Crop = CyberCrop()
-Cyber_Crop.mainloop()
+if __name__ == '__main__':
+    CyberCrop().mainloop()
