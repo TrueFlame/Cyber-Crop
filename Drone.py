@@ -6,10 +6,7 @@ class Drone():
         self.Water_Capacity=Water_Capacity
         self.Chemical_Capacity=Chemical_Capacity
 
-    def CheckPrivilege(AccountPrivilege):
-    		pass
-    def ReturnPrivilege(AccountPrivilege):
-    		pass
+
     def CheckDatabase():
     		pass
     def AreaSelect(expanse):
