@@ -22,3 +22,7 @@ class Drone():
     		pass
     def Sprinkling(expanse,Water_Capacity):
     		pass
+    def Humidity_Calculation(expanse)
+            pass
+    def Flight_Calculation(expanse)
+            pass
