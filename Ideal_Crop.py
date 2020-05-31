@@ -1,3 +1,4 @@
+import random
 class Ideal_Crop:
     def __init__ (self, crop_name, ideal_temp_low, ideal_temp_high, ideal_humidity_low, ideal_humidity_high,  sun_exposure, 
                   ground_data, helpful_tips):
@@ -15,6 +16,11 @@ Potato = Ideal_Crop("Potato",1,10,2,20,30,["x","y","z"],["tip1","tip2","tip3"])
 Cucumber = Ideal_Crop("Cucumber",1,10,2,20,30,["x","y","z",],["tip1","tip2","tip3","tip4"])
 Green_Pepper = Ideal_Crop("Green Pepper",1,10,2,20,30,["x","y","z"],["tip1","tip2","tip3"])
 
-def show_ideal_crop(crop_name):
-    print(vars(crop_name))
+def show_ideal_crop(crop):
+    print ("Crop:" + crop.crop_name + "\nIdeal temperature range:" + str(crop.ideal_temp_low) + "-" + str(crop.ideal_temp_high) + " \u2103"
+           "\nIdeal humidity range:" + str(crop.ideal_humidity_low) + "-"
+           + str(crop.ideal_humidity_high) + " %" "\nIdeal sun exposure:" + str(crop.sun_exposure))
+    print(crop.ground_data)
+    print (random.choice(crop.helpful_tips))
+
     
