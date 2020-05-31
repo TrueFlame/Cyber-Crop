@@ -17,18 +17,14 @@ class SensorSection():
         return AccountPrivilege
         pass
     def CheckSensor():
-        if Install == False :
+        if Install == False:
             print("There is an error in Sensor Installation")	
             pass
     def SensorInfo(expanse):
-        self.Install=Install
-        self.Humidity=Humidity
-        self.Temp=Temp
-        self.sun_exposure=sun_exposure
-        print("Humidity:" Humidity, "Temperature:" Temp, "Sun Exposure: " sun_exposure)
-        pass
+              print("Humidity:" +Humidity, "Temperature:" +Temp, "Sun Exposure: " +sun_exposure)
+              pass
     def SensorError():
-        if Install = True:
+        if Install == True:
             print("there is an error in Sensor system")
             pass
 
