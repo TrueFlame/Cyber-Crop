@@ -8,14 +8,6 @@ class SensorSection():
         self.Temp=Temp
         self.sun_exposure=sun_exposure
     
-    def CheckPrivilege(AccountPrivilege):
-        if AccountPrivilege == 'Amateur':
-            print("You don't have access to this category")
-            print("Upgrade your account Or return to user menu")
-            pass
-    def ReturnPrivilege(AccountPrivilege):
-        return AccountPrivilege
-        pass
     def CheckSensor():
         if Install == False:
             print("There is an error in Sensor Installation")	
