@@ -4,9 +4,9 @@ class SensorSection():
 		self.ID=ID
 		self.Model=Model
 		self.Install=Install
-        	self.Humidity=Humidity
-        	self.Temp=Temp
-        	self.sun_exposure=sun_exposure
+		self.Humidity=Humidity
+		self.Temp=Temp
+		self.sun_exposure=sun_exposure
     
    def CheckPrivilege(AccountPrivilege):
 		self.AccountPrivilege=AccountPrivilege
