@@ -236,7 +236,7 @@ class UpgradeGUI(tk.Frame):
             data_file.append(upgraded_account)
             
             for account in data_file:
-                with open("database.pkl", "ab") as database:
+                with open("database.pkl", "wb") as database:
                     pickle.dump(account, database, pickle.HIGHEST_PROTOCOL)
             
             master.switch_frame(SuccessfulUpgrade)
@@ -560,7 +560,9 @@ class UserMenuGUI(tk.Frame):
         tk.Label(self, text="User Menu", font=('Helvetica', 18, "bold"), background = "white").grid(row = 1, column = 1 , pady=5, padx = 5)
         ttk.Button(self, text="Go back to Log In", command=lambda: master.switch_frame(LogInGUI)).grid(row = 2, column = 0, sticky = tk.E)
         ttk.Button(self, text = "Customer Support", command = lambda: master.switch_frame(CustomerSupportGUI)).grid(row = 3, column = 0)
-        button1 = ttk.Button(self, text="Upgrade", command=lambda: master.switch_frame(UpgradeGUI)).grid(row = 4, column = 0)
+        
+        button1 = ttk.Button(self, text="Upgrade", command=lambda: master.switch_frame(UpgradeGUI))
+        button1.grid(row = 4, column = 0)
         
         if global_privillege == "Business":
             button1.configure(state = "disabled")
