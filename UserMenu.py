@@ -69,7 +69,7 @@ class CyberCrop(tk.Tk):
     def characteristics(self):
         self.resizable()
         self.title("Cyber Crop")
-        self.geometry("1080x720")
+        self.geometry("1600x900")
         self.iconbitmap("logo.ico")
         self.configure(background = "white")
     
