@@ -54,7 +54,7 @@ def ReturnPrivillege(business: Business):
             print(True)
 
 
-business1 = Business("Andrew", "oikonomou", "ok", "kati", "kati#gmail.com", "123456", "mounakias")
+business1 = Business("Andrew", "oikonomou", "ok", "kati", "kati#gmail.com", "123456", "makias")
 
 #business1.ReturnPrivillege()
 account_dict = {}
