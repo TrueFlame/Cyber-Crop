@@ -1,5 +1,6 @@
 import tkinter as tk
 import pickle
+import pathlib
 
 #############################
 from tkinter import ttk
@@ -9,7 +10,7 @@ from PIL import Image, ImageTk
 ##################
 
 from Account import *
-
+from Expanse import *
 
 ############################
 
@@ -22,10 +23,9 @@ def load_all(database):
             except EOFError:
                 break
 
-def save_object(account):
+def save_object(created_object):
     with open("database.pkl", "ab") as data_file:
-        pickle.dump(account, data_file, pickle.HIGHEST_PROTOCOL)
-        
+        pickle.dump(created_object, data_file, pickle.HIGHEST_PROTOCOL)
         
 #############################################################
 
@@ -512,7 +512,7 @@ class WelcomeUser(tk.Frame):
         label1.pack()
         
         tk.Label(self, text="Welcome " + global_username, font = ("Times New Roman", 24), background = "white").pack(side="top", fill="x", pady=5)
-        self.after(1500, lambda: master.switch_frame(UserMenuGUI))
+        self.after(1200, lambda: master.switch_frame(UserMenuGUI))
 
 
 class SuccessfulSignUp(tk.Frame):
@@ -527,7 +527,7 @@ class SuccessfulSignUp(tk.Frame):
         label1.pack()
         
         tk.Label(self, text="Successful Sign-up", font = ("Times New Roman", 24), background = "white").pack(side="top", fill="x", pady=5)
-        self.after(1500, lambda: master.switch_frame(LogInGUI))
+        self.after(1200, lambda: master.switch_frame(LogInGUI))
 
 
 class SuccessfulUpgrade(tk.Frame):
@@ -542,7 +542,22 @@ class SuccessfulUpgrade(tk.Frame):
         label1.pack()
         
         tk.Label(self, text="Successful Upgrade", font = ("Times New Roman", 24), background = "white").pack(side="top", fill="x", pady=5)
-        self.after(1500, lambda: master.switch_frame(LogInGUI))
+        self.after(1200, lambda: master.switch_frame(LogInGUI))
+
+class SuccessfulAdd(tk.Frame):
+    
+    def __init__(self, master):  
+        tk.Frame.__init__(self, master)
+        tk.Frame.configure(self,background='white')
+    
+        photo = ImageTk.PhotoImage(Image.open("logo.png"))
+        label1 = ttk.Label(self, image = photo)
+        label1.image = photo # εχει προβληματα με το garbage disposal και γιαυτο κραταμε μια αναφορα στην εικόνα
+        label1.pack()
+        
+        tk.Label(self, text="Successfully Added", font = ("Times New Roman", 24), background = "white").pack(side="top", fill="x", pady=5)
+        self.after(1200, lambda: master.switch_frame(ExpanseGUI))
+
 ###################################################################################
 class UserMenuGUI(tk.Frame):
     
@@ -550,7 +565,7 @@ class UserMenuGUI(tk.Frame):
         tk.Frame.__init__(self, master)
         tk.Frame.configure(self,background='white')
         
-        master.title("User Menu")
+        master.title("Cyber Crop - User Menu")
         
         photo = ImageTk.PhotoImage(Image.open("logo.png"))
         label1 = ttk.Label(self, image = photo)
@@ -561,11 +576,14 @@ class UserMenuGUI(tk.Frame):
         ttk.Button(self, text="Go back to Log In", command=lambda: master.switch_frame(LogInGUI)).grid(row = 2, column = 0, sticky = tk.E)
         ttk.Button(self, text = "Customer Support", command = lambda: master.switch_frame(CustomerSupportGUI)).grid(row = 3, column = 0)
         
-        button1 = ttk.Button(self, text="Upgrade", command=lambda: master.switch_frame(UpgradeGUI))
-        button1.grid(row = 4, column = 0)
+        butt_upgrade = ttk.Button(self, text="Upgrade", command=lambda: master.switch_frame(UpgradeGUI))
+        butt_upgrade.grid(row = 5, column = 0)
+        
+        butt_expanse = ttk.Button(self, text = "Expanse", command = lambda: master.switch_frame(ExpanseGUI))
+        butt_expanse.grid(row = 4, column = 0)
         
         if global_privillege == "Business":
-            button1.configure(state = "disabled")
+            butt_upgrade.configure(state = "disabled")
         
 class CustomerSupportGUI(tk.Frame):
     
@@ -581,7 +599,8 @@ class CustomerSupportGUI(tk.Frame):
         nb_style_white.configure("White.TNotebook", background = "white")
         
         
-        ################ image 
+        ################ image
+        
         photo = ImageTk.PhotoImage(Image.open("logo.png"))
         label1 = tk.Label(self, image = photo)
         label1.image = photo # εχει προβληματα με το garbage disposal και γιαυτο κραταμε μια αναφορα στην εικόνα
@@ -635,8 +654,442 @@ class CustomerSupportGUI(tk.Frame):
             tk.Label(self, text = " Email and live chat are unavailable in the Amateur version.", background = "white", font = ("Arial",18, "bold")).grid(row = 3, column = 1)
         
         tk.Label(self, text="Customer Support", font=('Helvetica', 18, "bold"), background = "white").grid(row = 1, column = 1, pady=5, padx = 5)
-        ttk.Button(self, text="Go back to Log In", command=lambda: master.switch_frame(LogInGUI)).grid(row = 2, column = 2, padx = 5, pady = 5)
+        ttk.Button(self, text="Go back to User Menu", command=lambda: master.switch_frame(UserMenuGUI)).grid(row = 2, column = 2, padx = 5, pady = 5)
 
+
+class ExpanseGUI(tk.Frame):
+    
+    def __init__(self, master):  
+        tk.Frame.__init__(self, master)
+        tk.Frame.configure(self,background='white')
+        
+        master.title("Cyber Crop - Expanse Options")
+        
+        
+        ################ image
+        photo = ImageTk.PhotoImage(Image.open("logo.png"))
+        label1 = tk.Label(self, image = photo)
+        label1.image = photo # εχει προβληματα με το garbage disposal και γιαυτο κραταμε μια αναφορα στην εικόνα
+        label1.grid(row = 0, column = 2, padx = 5, pady = 5)
+        label1.configure(background = "white")
+        
+        tk.Label(self, text="Expanse Options", font=('Helvetica', 28, "bold"), background = "white").grid(row = 1, column = 2,padx = 5, pady=5)
+        
+        ttk.Button(self, text = "Add Expanse", command = lambda: master.switch_frame(AddExpanseGUI)).grid(row = 2, column = 1, padx = 5, pady = 5)
+        crop_add = ttk.Button(self, text = "Add Crop", command = lambda: master.switch_frame(AddCropGUI))
+        photo_add = ttk.Button(self, text = "Add Photovoltaic", command = lambda: master.switch_frame(AddPhotovoltaicGUI))
+        
+        crop_add.grid(row = 2, column = 2, padx = 5, pady = 5)
+        photo_add.grid(row = 2, column = 3, padx = 5, pady = 5)
+        ttk.Button(self, text="Go back to User Menu", command=lambda: master.switch_frame(UserMenuGUI)).grid(row = 5, column = 5, padx = 5, pady = 5)
+        
+        ################## check if file exists, if not create it
+        file = pathlib.Path("areas_database.pkl")
+        
+        if not file.exists():
+            open('areas_database.pkl', 'w+')
+        ##############################################3
+        
+        data_file = list(load_all("areas_database.pkl"))
+        i = 0
+        for ob in data_file:
+            if isinstance(ob, Expanse):
+                if global_username == ob.owner_username:
+                    i += 1
+        if i == 0:
+            crop_add.configure(state = "disabled")
+            photo_add.configure(state = "disabled")
+        ###################################################
+
+class AddExpanseGUI(tk.Frame):
+    
+    def __init__(self, master):  
+        tk.Frame.__init__(self, master)
+        tk.Frame.configure(self,background='white')
+        
+        master.title("Cyber Crop - Add Expanse")
+        
+        entry_style_black = ttk.Style()
+        entry_style_black.configure("Black.TEntry", foreground = "black", background = "white")
+        entry_style_grey = ttk.Style()
+        entry_style_grey.configure("Grey.TEntry", foreground = "grey", background = "white")
+        
+        #################################### add expanse
+        def add_expanse():
+            new_size = size_entry.get()
+            new_longitude = long_entry.get()
+            new_latitude = lat_entry.get()
+            new_owner_username = global_username
+            new_exp_id = 1
+            
+            file = pathlib.Path("areas_database.pkl")
+            
+            
+            
+            if file.exists():
+                data_file = list(load_all("areas_database.pkl"))
+                for ob in data_file:
+                    if isinstance(ob, Expanse):
+                        if global_username == ob.owner_username:
+                            new_exp_id += 1
+            
+            new_expanse = Expanse(global_username, new_exp_id, new_size, new_longitude, new_latitude)
+            with open("areas_database.pkl", "ab") as data_file:
+                pickle.dump(new_expanse, data_file, pickle.HIGHEST_PROTOCOL)
+            
+            master.switch_frame(SuccessfulAdd)
+
+        ############################# make entries blinking
+        
+        def on_entry_click_size(event):
+            
+            """function that gets called whenever entry is clicked"""
+            if size_entry.get() == 'Size...':
+                size_entry.delete(0, "end") # delete all the text in the entry
+                size_entry.insert(0, '') #Insert blank for user input
+                size_entry.configure(style = "Black.TEntry")
+        
+        def on_focusout_size(event):
+            if size_entry.get() == '':
+                size_entry.insert(0, 'Size...')
+                      
+        def on_entry_click_longitude(event):
+            
+            """function that gets called whenever entry is clicked"""
+            if long_entry.get() == 'Longitude...':
+                long_entry.delete(0, "end") # delete all the text in the entry
+                long_entry.insert(0, '') #Insert blank for user input
+                long_entry.configure(style = "Black.TEntry")
+        
+        def on_focusout_longitude(event):
+            if long_entry.get() == '':
+                long_entry.insert(0, 'Longitude...')
+                long_entry.configure(style = "Black.TEntry") 
+
+        def on_entry_click_latitude(event):
+            
+            """function that gets called whenever entry is clicked"""
+            if lat_entry.get() == 'Latitude...':
+                lat_entry.delete(0, "end") # delete all the text in the entry
+                lat_entry.insert(0, '') #Insert blank for user input
+                lat_entry.configure(style = "Black.TEntry")
+        
+        def on_focusout_latitude(event):
+            if lat_entry.get() == '':
+                lat_entry.insert(0, 'Latitude...')
+        
+        ################ image
+        photo = ImageTk.PhotoImage(Image.open("logo.png"))
+        label1 = tk.Label(self, image = photo)
+        label1.image = photo # εχει προβληματα με το garbage disposal και γιαυτο κραταμε μια αναφορα στην εικόνα
+        label1.grid(row = 0, column = 1, padx = 5, pady = 5, columnspan = 5)
+        label1.configure(background = "white")
+        
+        ############################# entry labels
+        
+        size_label = tk.Label(self, text = "Size: ", background = "white")
+        long_label = tk.Label(self, text = "Longitude: ", background = "white")
+        lat_label = tk.Label(self, text = "Latitude: ", background = "white")
+        
+        
+        size_label.grid(row = 2, column = 0, padx = 5, pady = 5, sticky = tk.E)
+        long_label.grid(row = 3, column = 0, padx = 5, pady = 5, sticky = tk.E)
+        lat_label.grid(row = 4, column = 0, padx = 5, pady = 5, sticky = tk.E)
+        
+        
+        
+        ####################### info Entries
+        
+        size_entry = ttk.Entry(self, width = 20)
+        long_entry = ttk.Entry(self, width = 20)        
+        lat_entry = ttk.Entry(self, width = 20)
+        
+        size_entry.grid(row = 2, column = 1, padx = 30)
+        long_entry.grid(row = 3, column = 1, padx = 30)
+        lat_entry.grid(row = 4, column = 1, padx = 30)
+        
+        size_entry.insert(0, "Size...")
+        size_entry.bind('<FocusIn>', on_entry_click_size)
+        size_entry.bind('<FocusOut>', on_focusout_size)
+        size_entry.configure(style = "Black.TEntry")
+        
+        long_entry.insert(0, "Longitude...")
+        long_entry.bind("<FocusIn>", on_entry_click_longitude)
+        long_entry.bind("<FocusOut>", on_focusout_longitude)
+        long_entry.configure(style = "Black.TEntry")
+        
+        lat_entry.insert(0, "Latitude...")
+        lat_entry.bind("<FocusIn>", on_entry_click_latitude)
+        lat_entry.bind("<FocusOut>", on_focusout_latitude)
+        lat_entry.configure(style = "Black.TEntry")
+        
+        tk.Label(self, text="Add Expanse", font=('Helvetica', 28, "bold"), background = "white").grid(row = 1, column = 1, padx = 5, pady=5, sticky = tk.E)
+        ttk.Button(self, text = "Add Expanse", command = add_expanse).grid(row = 5, column = 1, padx = 5, pady = 5)
+
+class AddCropGUI(tk.Frame):
+    
+    def __init__(self, master):  
+        tk.Frame.__init__(self, master)
+        tk.Frame.configure(self,background='white')
+        
+        master.title("Cyber Crop - Add Crop")
+        
+        
+        ################### entries styles
+        
+        entry_style_black = ttk.Style()
+        entry_style_black.configure("Black.TEntry", foreground = "black", background = "white")
+        entry_style_grey = ttk.Style()
+        entry_style_grey.configure("Grey.TEntry", foreground = "grey", background = "white")
+        
+        ############################# make entries blinking
+        
+        def on_entry_click_size(event):
+            
+            """function that gets called whenever entry is clicked"""
+            if size_entry.get() == 'Crop size...':
+                size_entry.delete(0, "end") # delete all the text in the entry
+                size_entry.insert(0, '') #Insert blank for user input
+                size_entry.configure(style = "Black.TEntry")
+        
+        def on_focusout_size(event):
+            if size_entry.get() == '':
+                size_entry.insert(0, 'Crop size...')
+                      
+        def on_entry_click_crop_name(event):
+            
+            """function that gets called whenever entry is clicked"""
+            if crop_name_entry.get() == "Give a name for your crop...":
+                crop_name_entry.delete(0, "end") # delete all the text in the entry
+                crop_name_entry.insert(0, '') #Insert blank for user input
+                crop_name_entry.configure(style = "Black.TEntry")
+        
+        def on_focusout_crop_name(event):
+            if crop_name_entry.get() == '':
+                crop_name_entry.insert(0, "Give a name for your crop...")
+                crop_name_entry.configure(style = "Black.TEntry") 
+
+        def on_entry_click_est_yield(event):
+            
+            """function that gets called whenever entry is clicked"""
+            if est_yield_entry.get() == "Give an estimation of your yield...":
+                est_yield_entry.delete(0, "end") # delete all the text in the entry
+                est_yield_entry.insert(0, '') #Insert blank for user input
+                est_yield_entry.configure(style = "Black.TEntry")
+        
+        def on_focusout_est_yield(event):
+            if est_yield_entry.get() == '':
+                est_yield_entry.insert(0, "Give an estimation of your yield...")
+        
+        
+        def add_crop():
+            
+            crop_name_data = crop_name_entry.get()
+            size_data = size_entry.get()
+            est_yield_data = est_yield_entry.get()
+            
+            exp_id_choice = expanse_select_option.get()
+            crop_type_choice = crop_types.get()
+            
+            new_latitude = 0.0
+            new_longitude = 0.0
+            
+            data_file = list(load_all("areas_database.pkl"))
+            
+            for ob in data_file:
+                if isinstance(ob, Expanse):
+                    if global_username == ob.owner_username and exp_id_choice == ob.exp_id:
+                        new_latitude = ob.latitude
+                        new_longitude = ob.longitude
+            
+            new_counter_id = 1
+            for ob in data_file:
+                if isinstance(ob, Crop):
+                    if global_username == ob.owner_username:
+                        new_counter_id += 1
+            
+            new_crop = Crop(new_counter_id, crop_type_choice, crop_name_data, est_yield_data, size_data, new_longitude, new_latitude, exp_id_choice, global_username)
+            
+            with open("areas_database.pkl", "ab") as data_file:
+                pickle.dump(new_crop, data_file, pickle.HIGHEST_PROTOCOL)
+            
+            master.switch_frame(SuccessfulAdd)
+        
+        ################ image
+        photo = ImageTk.PhotoImage(Image.open("logo.png"))
+        label1 = tk.Label(self, image = photo)
+        label1.image = photo # εχει προβληματα με το garbage disposal και γιαυτο κραταμε μια αναφορα στην εικόνα
+        label1.grid(row = 0, column = 1, padx = 5, pady = 5)
+        label1.configure(background = "white")
+        
+        
+        tk.Label(self, text="Add Crop", font=('Helvetica', 28, "bold"), background = "white").grid(row = 1, column = 0, padx = 5, pady = 5, sticky = tk.E)
+        expanse_select_label = tk.Label(self, text = "Select expanse to add crop to: ", background = "white")
+        crop_types_label = tk.Label(self, text = "Select Crop type: ", background = "white")
+        crop_name_label = tk.Label(self, text = "Name your Crop: ", background = "white")
+        est_yield_label = tk.Label(self, text = "Give estimation of crop yield: ", background = "white")
+        size_label = tk.Label(self, text = "Give crop area size: ", background = "white")
+        
+        expanse_select_label.grid(row = 2, column = 0, padx = 5, pady = 5, sticky = tk.E)
+        crop_types_label.grid(row = 3, column = 0, padx = 5, pady = 5, sticky = tk.E)
+        crop_name_label.grid(row = 4, column = 0, padx = 5, pady = 5, sticky = tk.E)
+        est_yield_label.grid(row = 5, column = 0, padx = 5, pady = 5, sticky = tk.E)
+        size_label.grid(row = 6, column = 0, padx = 5, pady = 5, sticky = tk.E)
+        ########################## find available expanses to add crops and option menus
+        
+        data_file = list(load_all("areas_database.pkl"))
+        available_expanses_id = []
+        
+        for ob in data_file:
+            if isinstance(ob, Expanse):
+                if global_username == ob.owner_username:
+                    available_expanses_id.append(ob.exp_id)
+        
+        
+        crop_available_options =["Strawberry", "Orange", "Eggplant"]
+        
+        crop_types = tk.StringVar() ## to get available crops from optionmenu1
+        expanse_select_option = tk.IntVar() # to get available expanse id from optionmenu2
+        
+        crop_types.set(crop_available_options[0])
+        expanse_select_option.set(available_expanses_id[0])
+        
+        crop_optionmenu = ttk.OptionMenu(self, crop_types, *crop_available_options)
+        expanse_selection_menu = ttk.OptionMenu(self, expanse_select_option, *available_expanses_id)
+        
+        crop_optionmenu.grid(row = 3, column = 1, padx = 5, pady = 5)
+        expanse_selection_menu.grid(row = 2, column = 1, padx = 5, pady = 5)
+        
+        ################### entries
+        crop_name_entry = ttk.Entry(self, width = 25)
+        est_yield_entry = ttk.Entry(self, width = 25)
+        size_entry = ttk.Entry(self, width = 25)
+        
+        crop_name_entry.grid(row = 4, column = 1)
+        est_yield_entry.grid(row = 5, column = 1)
+        size_entry.grid(row = 6, column = 1)
+        
+        crop_name_entry.insert(0, "Give a name for your crop...")
+        crop_name_entry.bind('<FocusIn>', on_entry_click_crop_name)
+        crop_name_entry.bind('<FocusOut>', on_focusout_crop_name)
+        crop_name_entry.configure(style = "Black.TEntry")
+        
+        est_yield_entry.insert(0, "Give an estimation of your yield...")
+        est_yield_entry.bind("<FocusIn>", on_entry_click_est_yield)
+        est_yield_entry.bind("<FocusOut>", on_focusout_est_yield)
+        est_yield_entry.configure(style = "Black.TEntry")
+        
+        size_entry.insert(0, "Crop size...")
+        size_entry.bind('<FocusIn>', on_entry_click_size)
+        size_entry.bind('<FocusOut>', on_focusout_size)
+        size_entry.configure(style = "Black.TEntry")
+        
+        ttk.Button(self, text = "Add Crop", command = add_crop).grid(row = 9, column = 1, padx = 5, pady = 5)
+        
+class AddPhotovoltaicGUI(tk.Frame):
+    
+    def __init__(self, master):  
+        tk.Frame.__init__(self, master)
+        tk.Frame.configure(self,background='white')
+        
+        master.title("Cyber Crop - Add Photovoltaic")
+        
+        
+        def on_entry_click_photovoltaic_size(event):
+            
+            """function that gets called whenever entry is clicked"""
+            if size_entry.get() == 'Photovoltaic size...':
+                size_entry.delete(0, "end") # delete all the text in the entry
+                size_entry.insert(0, '') #Insert blank for user input
+                size_entry.configure(style = "Black.TEntry")
+        
+        def on_focusout_photovoltaic_size(event):
+            if size_entry.get() == '':
+                size_entry.insert(0, 'Photovoltaic size...')
+                      
+        def on_entry_click_est_production(event):
+            
+            """function that gets called whenever entry is clicked"""
+            if est_production_entry.get() == "Give an estimation of your production...":
+                est_production_entry.delete(0, "end") # delete all the text in the entry
+                est_production_entry.insert(0, '') #Insert blank for user input
+                est_production_entry.configure(style = "Black.TEntry")
+        
+        def on_focusout_est_production(event):
+            if est_production_entry.get() == '':
+                est_production_entry.insert(0, "Give an estimation of your production...")
+                est_production_entry.configure(style = "Black.TEntry") 
+        
+        
+        
+        ################### entries styles
+        
+        entry_style_black = ttk.Style()
+        entry_style_black.configure("Black.TEntry", foreground = "black", background = "white")
+        entry_style_grey = ttk.Style()
+        entry_style_grey.configure("Grey.TEntry", foreground = "grey", background = "white")
+        
+        
+        ################ image
+        photo = ImageTk.PhotoImage(Image.open("logo.png"))
+        label1 = tk.Label(self, image = photo)
+        label1.image = photo # εχει προβληματα με το garbage disposal και γιαυτο κραταμε μια αναφορα στην εικόνα
+        label1.grid(row = 0, column = 1, padx = 5, pady = 5)
+        label1.configure(background = "white")
+        
+        ###################################################### labels
+        
+        tk.Label(self, text="Add Photovoltaic", font=('Helvetica', 28, "bold"), background = "white").grid(row = 1, column = 0, padx = 5, pady = 5, sticky = tk.E)
+        expanse_select_label = tk.Label(self, text = "Select expanse to add photovoltaic to: ", background = "white")
+        photo_type_label = tk.Label(self, text = "Select photovoltaic type: ", background = "white")
+        est_production_label = tk.Label(self, text = "Give photovoltaic estimated production: ", background = "white")
+        size_label = tk.Label(self, text = "Give photovoltaic area size: ", background = "white")
+        
+        ################### entries
+        est_production_entry = ttk.Entry(self, width = 25)
+        size_entry = ttk.Entry(self, width = 25)
+        
+        est_production_entry.grid(row = 5, column = 1)
+        size_entry.grid(row = 6, column = 1)
+        
+        ### model and type will be from list for an option menu, so we will three option menus , one for expanse select, one for model and one for type
+        
+        data_file = list(load_all("areas_database.pkl"))
+        available_expanses_id = []
+        
+        for ob in data_file:
+            if isinstance(ob, Expanse):
+                if global_username == ob.owner_username:
+                    available_expanses_id.append(ob.exp_id)
+        
+        photovoltaic_types_options = ["Monocrystalline silicon", "Amorphous silicon", "Polymer and organic"]
+        
+        
+        photo_types_choice = tk.StringVar() ## to get available crops from optionmenu1
+        expanse_select_option = tk.IntVar()
+        
+        photo_types_choice.set(photovoltaic_types_options[0])
+        expanse_select_option.set(available_expanses_id[0])
+        
+        photovoltaic_type_optionmenu = ttk.OptionMenu(self, photo_types_choice, *photovoltaic_types_options)
+        expanse_selection_menu = ttk.OptionMenu(self, expanse_select_option, *available_expanses_id)
+        
+        photovoltaic_type_optionmenu.grid(row = 3, column = 1, padx = 5, pady = 5)
+        expanse_selection_menu.grid(row = 2, column = 1, padx = 5, pady = 5)
+        
+        est_production_entry.insert(0, "Give an estimation of your production...")
+        est_production_entry.bind("<FocusIn>", on_entry_click_est_yield)
+        est_production_entry.bind("<FocusOut>", on_focusout_est_yield)
+        est_production_entry.configure(style = "Black.TEntry")
+        
+        size_entry.insert(0, "Photovoltaic size...")
+        size_entry.bind('<FocusIn>', on_entry_click_size)
+        size_entry.bind('<FocusOut>', on_focusout_size)
+        size_entry.configure(style = "Black.TEntry")
+        
+        
+        
+        tk.Label(self, text="Add Photovoltaic", font=('Helvetica', 28, "bold"), background = "white").grid(row = 1, column = 1,padx = 5, pady=5, sticky = tk.E)
 if __name__ == '__main__':
     CyberCrop().mainloop()
 
