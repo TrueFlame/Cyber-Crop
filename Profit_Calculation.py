@@ -25,7 +25,7 @@ class ProfitCalculation():
         elif self.CountryID == "Germany":
             german_transport_cost = transport_cost * 2.0
             new_profit = str(selling_income - german_transport_cost)
-            return ("True profit in Germany is: " + new_profit+ "EUR" )
+            return ("True profit in Germany is: " + new_profit + "EUR" )
         
         elif self.CountryID == "France":
             str_profit = str(new_profit)
@@ -45,7 +45,7 @@ class ProfitCalculation():
         
         elif self.CountryID == "China":
             new_profit = str(true_profit*8.0)
-            return ("True profit in China is: " + new_profit+ " CNY")
+            return ("True profit in China is: " + new_profit + " CNY")
 
 
     def prof_calc_photovoltaic(self, photo_ob):
@@ -61,7 +61,7 @@ class ProfitCalculation():
         
         if self.CountryID == "USA":
             profit_usd = str((selling_income * 0.7) - installation_cost)
-            return ("True profit in America is: "+ profit_usd +"USD")
+            return ("True profit in America is: "+ profit_usd +" USD")
         
         elif self.CountryID == "Germany":
             new_profit = str((selling_income * 2.0) - installation_cost)
