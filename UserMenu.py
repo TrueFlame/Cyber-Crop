@@ -73,7 +73,7 @@ class CyberCrop(tk.Tk):
         self.geometry("1600x900")
         self.iconbitmap("logo.ico")
         self.configure(background = "white")
-    
+        
 class LogInGUI(tk.Frame):
   
     def __init__(self, master):
@@ -725,7 +725,12 @@ class ExpanseGUI(tk.Frame):
             crop_add.configure(state = "disabled")
             photo_add.configure(state = "disabled")
         ###################################################
-
+        
+        
+        if global_privillege == "Amateur":
+            crop_add.configure(state = "disabled")
+            photo_add.configure(state = "disabled")
+            
 class AddExpanseGUI(tk.Frame):
     
     def __init__(self, master):  
@@ -748,8 +753,6 @@ class AddExpanseGUI(tk.Frame):
             new_exp_id = 1
             
             file = pathlib.Path("areas_database.pkl")
-            
-            
             
             if file.exists():
                 data_file = list(load_all("areas_database.pkl"))
@@ -822,7 +825,6 @@ class AddExpanseGUI(tk.Frame):
         lat_label.grid(row = 4, column = 0, padx = 5, pady = 5, sticky = tk.E)
         
         
-        
         ####################### info Entries
         
         size_entry = ttk.Entry(self, width = 20)
@@ -851,6 +853,8 @@ class AddExpanseGUI(tk.Frame):
         tk.Label(self, text="Add Expanse", font=('Helvetica', 28, "bold"), background = "white").grid(row = 1, column = 1, padx = 5, pady=5, sticky = tk.E)
         ttk.Button(self, text = "Add Expanse", command = add_expanse).grid(row = 5, column = 1, padx = 5, pady = 5)
 
+        ttk.Button(self, text = "Reurn to Expanse Menu", command = lambda: master.switch_frame(ExpanseGUI)).grid(row = 7 , column = 1, padx = 10, pady = 10)
+        
 class AddCropGUI(tk.Frame):
     
     def __init__(self, master):  
@@ -1040,7 +1044,7 @@ class AddCropGUI(tk.Frame):
         sensor_model_entry.configure(style = "Black.TEntry")
         
         ttk.Button(self, text = "Add Crop", command = add_crop).grid(row = 9, column = 1, padx = 5, pady = 5)
-        ttk.Button(self, text = " Return to Main Menu", command =lambda: master.switch_frame(UserMenuGUI)).grid(row = 10, column = 1, padx = 10, pady = 10)
+        ttk.Button(self, text = " Return to Expanse Menu", command =lambda: master.switch_frame(ExpanseGUI)).grid(row = 10, column = 1, padx = 10, pady = 10)
         
 class AddPhotovoltaicGUI(tk.Frame):
     
@@ -1117,9 +1121,11 @@ class AddPhotovoltaicGUI(tk.Frame):
             est_production_data = est_production_entry.get()
             efficiency_data = efficiency_entry.get()
             size_data = size_entry.get()
+            sensor_model_data = sensor_model_entry.get()
             
             exp_id_choice = expanse_select_option.get()
             photo_choice = photo_types_choice.get()
+            sensor_type_choice = sensor_types.get()
             
             new_latitude = 0.0
             new_longitude = 0.0
@@ -1138,7 +1144,8 @@ class AddPhotovoltaicGUI(tk.Frame):
                     if global_username == ob.owner_username:
                         new_counter_id += 1
             
-            new_photovoltaic = Photovoltaics(new_counter_id, photo_choice, photo_name_data, est_production_data, efficiency_data, size_data, new_longitude, new_latitude, exp_id_choice, global_username)
+            new_sensor = Sensor(new_counter_id, sensor_type_choice, sensor_model_data)
+            new_photovoltaic = Photovoltaics(new_counter_id, photo_choice, photo_name_data, est_production_data, efficiency_data, size_data, new_longitude, new_latitude, new_sensor, exp_id_choice, global_username)
             
             with open("areas_database.pkl", "ab") as data_file:
                 pickle.dump(new_photovoltaic, data_file, pickle.HIGHEST_PROTOCOL)
@@ -1169,7 +1176,6 @@ class AddPhotovoltaicGUI(tk.Frame):
         size_label = tk.Label(self, text = "Give photovoltaic area size: ", background = "white")
         sensor_type_label = tk.Label(self, text = "Select type of sensor: ", background = "white")
         sensor_model_label = tk.Label(self, text = " Give name of model: ", background = "white")
-        
         
         expanse_select_label.grid(row = 2, column = 0, padx = 5, pady = 5)
         photo_type_label.grid(row = 3, column = 0, padx = 5, pady = 5)
@@ -1256,46 +1262,62 @@ class ProfitCalculationGUI(tk.Frame):
         master.title("Cyber Crop - Profit Calculation")
         
         def profit_calculation_func():
+            
+            def clear_result():
+                new_label.destroy()
+                result_announcement.destroy()
+                
             country_data = country_selection.get()
             crop_name_selection = crop_selection.get()
             photo_name_selection = photo_selection.get()
             
             if counter_pv >= 1 and counter_crops >= 1:
-                if photo_name_selection == available_photovoltaics_name[0]:
+                if photo_name_selection == "None":
                     for ob in data_file:
                         if isinstance(ob, Crop):
                             if crop_name_selection == ob.crop_name:
                                 selected_item = ob
-                    
-                elif crop_name_selection == available_crops_name[0]:
+                                new_profit_calculation = ProfitCalculation(country_data)
+                                returned_text = new_profit_calculation.prof_calc_crop(selected_item)
+                                
+                elif crop_name_selection == "None":
                     for ob in data_file:
                         if isinstance(ob, Photovoltaics):
-                            if photo_name_selection == ob.photo_name:
+                            if photo_name_selection == ob.name:
                                 selected_item = ob
-            
+                                new_profit_calculation = ProfitCalculation(country_data)
+                                returned_text = new_profit_calculation.prof_calc_photovoltaic(selected_item)
+                                
             elif counter_pv == 0 and counter_crops >= 1:
                 for ob in data_file:
                     if isinstance(ob, Crop):
                         if crop_name_selection == ob.crop_name:
                             selected_item = ob
+                            new_profit_calculation = ProfitCalculation(country_data)
+                            returned_text = new_profit_calculation.prof_calc_crop(selected_item)
             
             elif counter_pv >= 1 and counter_crops == 0:
                 for ob in data_file:
                     if isinstance(ob, Photovoltaics):
-                        if photo_name_selection == ob.photo_name:
+                        if photo_name_selection == ob.name:
                             selected_item = ob
+                            new_profit_calculation = ProfitCalculation(country_data)
+                            returned_text = new_profit_calculation.prof_calc_photovoltaic(selected_item)
             
-            new_profit_calculation = ProfitCalculation(country_data)
-            returned_text = new_profit_calculation.prof_calc_crop(selected_item)
+        
+            new_label = tk.Label(self, text = returned_text, background = "white")
+            new_label.grid(row = 6, column = 1)
             
-            new_label = ttk.Label(self, text = returned_text)
-            new_label.grid(row = 4, column = 4)
+            result_announcement = tk.Label(self, text = "Calculated profit is: ", background = "white")
+            result_announcement.grid(row = 6, column = 0)
+            
+            ttk.Button(self, text = "Clear Result", command = clear_result).grid(row = 7, column = 2, padx = 5, pady = 5)
            
         ################ image
         photo = ImageTk.PhotoImage(Image.open("logo.png"))
         label1 = tk.Label(self, image = photo)
         label1.image = photo # εχει προβληματα με το garbage disposal και γιαυτο κραταμε μια αναφορα στην εικόνα
-        label1.grid(row = 0, column = 1, padx = 5, pady = 5)
+        label1.grid(row = 0, column = 1, padx = 5, pady = 5, columnspan = 6, sticky = tk.E)
         label1.configure(background = "white")
         
         ###################################################### labels
@@ -1317,15 +1339,18 @@ class ProfitCalculationGUI(tk.Frame):
                     counter_crops += 1
             elif isinstance(ob, Photovoltaics):
                 if global_username == ob.owner_username:
-                    available_photovoltaics_name.append(ob.photo_name)
+                    available_photovoltaics_name.append(ob.name)
                     available_photovoltaics.append(ob)
                     counter_pv += 1
         
-        tk.Label(self, text = "Profit Calculation", font=('Helvetica', 28, "bold"), background = "white").grid(row = 1, column = 0, padx = 5, pady=5, sticky = tk.E)
-        tk.Label(self, text = "Select from the following: ", font = (14), background = "white").grid(row = 2, column = 0, padx = 5, pady = 5, sticky = tk.E)
+        available_crops_name.append("None")
+        available_photovoltaics_name.append("None")
+        
+        tk.Label(self, text = "Profit Calculation", font=('Helvetica', 24, "bold"), background = "white").grid(row = 1, column = 1, padx = 10, pady = 10, sticky = tk.E)
+        tk.Label(self, text = "Select from the following: ", background = "white").grid(row = 2, column = 0, padx = 5, pady = 5, sticky = tk.E)
         
         country_label = tk.Label(self, text = "Select the country you want to sell to: ", background = "white")
-        select_area = tk.Label(self, text = "Select which Crop or photovoltaic to find profit of, leave the default value in the other: ", background = "white")
+        select_area = tk.Label(self, text = "Select which Crop or photovoltaic to find profit of, leave the None value in the other: ", background = "white")
         
         country_label.grid(row = 4, column = 0)
         select_area.grid(row = 5, column = 0)
@@ -1350,12 +1375,11 @@ class ProfitCalculationGUI(tk.Frame):
             crop_selection_menu = ttk.OptionMenu(self, crop_selection, available_crops_name[0], *available_crops_name)
             crop_selection_menu.grid(row = 5, column = 1)
             
-        country_optionmenu.grid(row = 4, column = 1)
-        
+        country_optionmenu.grid(row = 4, column = 1, padx = 5, pady = 5)
         
         calculate_button = ttk.Button(self, text = "Calculate Profit", command = profit_calculation_func)
-        calculate_button.grid(row = 6, column = 0)
-        ttk.Button(self, text = "Return to Main Menu", command =lambda: master.switch_frame(UserMenuGUI)).grid(row = 9, column = 0)
+        calculate_button.grid(row = 10, column = 1, padx = 10, pady = 10)
+        ttk.Button(self, text = "Return to Main Menu", command =lambda: master.switch_frame(UserMenuGUI)).grid(row = 11, column = 1, padx = 10, pady = 10)
         
 if __name__ == '__main__':
     CyberCrop().mainloop()
