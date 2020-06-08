@@ -20,7 +20,7 @@ class ProfitCalculation():
                 
         if self.CountryID == "USA":
             profit_usd = str(true_profit*1.3)
-            return ("True profit in America is: + " + profit_usd +" USD" )
+            return ("True profit in America is: " + profit_usd +" USD" )
         
         elif self.CountryID == "Germany":
             german_transport_cost = transport_cost * 2.0
