@@ -1,5 +1,3 @@
-from expanse import *
-
 class Ideal_Crop:
     def __init__ (self, crop_name, ideal_temp_low, ideal_temp_high, ideal_humidity_low, ideal_humidity_high,  sun_exposure, ground_data : list, helpful_tips: list):
         self.crop_name = crop_name
