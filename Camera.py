@@ -1,4 +1,4 @@
-import cv2
+#import cv2
 from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
@@ -31,10 +31,10 @@ class Camera:
         lmain = ttk.Label(mainFrame)
         lmain.grid(row=0, column=0)
 
-        cap = cv2.VideoCapture("your camera feed")
+        #cap = cv2.VideoCapture("your camera feed")
         ret, frame = cap.read()
     
-        cv2image   = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
+        #cv2image   = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
         
         img   = Image.fromarray(cv2image).resize((760, 400))
         imgtk = ImageTk.PhotoImage(image = img, master = mainWindow)
