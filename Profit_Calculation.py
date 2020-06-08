@@ -28,7 +28,8 @@ class ProfitCalculation():
             return ("True profit in Germany is: " + new_profit+ "EUR" )
         
         elif self.CountryID == "France":
-            return ("True profit in France is: " + true_profit +" EUR")
+            str_profit = str(new_profit)
+            return ("True profit in France is: " + str_profit +" EUR")
         
         elif self.CountryID == "England":
             profit_eng = str(true_profit * 0.8)
@@ -76,7 +77,7 @@ class ProfitCalculation():
         
         elif self.CountryID == "Greece":
             new_profit = str(selling_income - installation_cost)
-            return ("True profit in Greece is: " +new_profit +  " EUR")
+            return ("True profit in Greece is: " + new_profit + " EUR")
         
         elif self.CountryID == "Russia":
             new_profit = str((selling_income * 77.0) - installation_cost)
@@ -84,7 +85,7 @@ class ProfitCalculation():
         
         elif self.CountryID == "China":
             new_profit = str((selling_income * 8.0) - installation_cost)
-            return ("True profit in China is: " + new_profit +" CNY")
+            return ("True profit in China is: " + new_profit + " CNY")
         
     
 def ChooseParameters(): #Επιλογή χώρας πώλησης και νομίσματος    
