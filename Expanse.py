@@ -4,15 +4,15 @@ from Sensor import *
 from Profit_Calculation import *
 
 class Expanse:
-    def __init__(self, owner_username, exp_id: int, size: float, longitude: float, latitude: float):
+    def __init__(self, owner_username: str, exp_id: int, size: float, longitude: float, latitude: float):
         self.owner_username = owner_username
         self.exp_id = exp_id
         self.size = size
-        self. longitude = longitude
+        self.longitude = longitude
         self.latitude = latitude 
         self.crops = []
         self.photovoltaics = []
-  
+
     def add_crop(self, crop_ob):
         self.crops.append({self.exp_id : crop_ob.crop_id})
         crop_ob.exp_id = self.exp_id
@@ -26,24 +26,14 @@ class Expanse:
     def Maximum_Utilization(self):
         pass
     
-    def ReturnErrocCode(self):
-        return False
-    
-    def ReturnErrorMessage(self):
-        print("Expanse does not exist")
-    
-    def ReturnBestMessage(self):
-        print("Successful Add")
-    
-    def ChooseOption(self):
-        pass
     
     def AreaSelect(self):
-        print("What would you like to select ? ")
+        print("Which expanse would you like to select? ")
         user_input = input()
         if user_input == "Crop":
             for i, crop in enumerate(self.crops):
                 pass
+        
         elif user_input == "Photovoltaics":
             for i, crop in enumerate(self.photovoltaics):
                 pass
@@ -53,32 +43,26 @@ class Expanse:
         new_camera.Expanse_Overview(frame)
 
 class Crop(Expanse):
-    def __init__ (self, crop_id: int, crop_type: str, name: str, size: float, est_yield: float, longitude, latitude, exp_id = None):
-        super().__init__(longitude, latitude)
+    def __init__ (self, crop_id, crop_type, crop_name, est_yield, size, longitude, latitude, Sensor_ob, exp_id = None, owner_username = None):
+        super().__init__(owner_username, size, longitude, latitude, exp_id)
         self.crop_id = crop_id
         self.crop_type = crop_type
-        self.name = name
-        self.size = size
+        self.crop_name = crop_name
         self.est_yield = est_yield
-        self.exp_id = exp_id
+        self.Sensor_ob = Sensor_ob
+        self.Humidity, self.Temp, self.sun_exposure = Sensor_ob.Humidity, Sensor_ob.Temp, Sensor_ob.sun_exposure
+
         
 class Photovoltaics(Expanse):
-    def __init__ (self, photo_id: int, model: str, ph_type: str, production: float, efficiency: int, longitude: float, latitude: float, exp_id = None):
-        super().__init__(longitude, latitude)
+    def __init__ (self, photo_id, ph_type, name, production, efficiency,  size, longitude, latitude, Sensor_ob, exp_id = None, owner_username = None):
+        super().__init__(owner_username, size, longitude, latitude, exp_id)
         self.photo_id = photo_id
-        self.model = model
         self.ph_type = ph_type
+        self.name = name
         self.production = production
         self.efficiency = efficiency
-        self.exp_id = exp_id
+        self.Sensor_ob = Sensor_ob
+        self.sun_exposure = Sensor_ob.sun_exposure
 
 
-expanse1 = Expanse("andy", 1, 1000.0, 9.98789 , 9.070709)
-crop1 = Crop(1, "Orange", "My Oranges", 150, 150.0, 9.89986, 9.00785568)
-
-expanse1.add_crop(crop1)
-
-country1, currency1 = ChooseParameters()
-
-profit_calculator = ProfitCalculation(1, country1, currency1)
 
