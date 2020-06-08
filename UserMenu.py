@@ -56,7 +56,7 @@ class CyberCrop(tk.Tk):
         upgrade_popup.title("Cyber Crop")
         upgrade_popup.configure(background = "white")
         
-        redirect_label = tk.Label(upgrade_popup, text = "Upgrade your Account to get access to these services")
+        redirect_label = tk.Label(upgrade_popup, text = "Upgrade your Account to get access to these services", background = "white")
         upgrade_button = ttk.Button(upgrade_popup, text = "Press to Upgrade", command = lambda: self.switch_frame(UpgradeGUI))
         
         redirect_label.pack()
@@ -706,7 +706,7 @@ class ExpanseGUI(tk.Frame):
         
         crop_add.grid(row = 2, column = 2, padx = 5, pady = 5)
         photo_add.grid(row = 2, column = 3, padx = 5, pady = 5)
-        ttk.Button(self, text="Go back to User Menu", command=lambda: master.switch_frame(UserMenuGUI)).grid(row = 5, column = 5, padx = 5, pady = 5)
+        ttk.Button(self, text="Go back to User Menu", command=lambda: master.switch_frame(UserMenuGUI)).grid(row = 5, column = 2, padx = 5, pady = 5)
         
         ################## check if file exists, if not create it
         file = pathlib.Path("areas_database.pkl")
