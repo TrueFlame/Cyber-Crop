@@ -25,10 +25,10 @@ class ProfitCalculation():
         elif self.CountryID == "Germany":
             german_transport_cost = transport_cost * 2.0
             new_profit = str(selling_income - german_transport_cost)
-            return ("True profit in Germany is: " + new_profit + "EUR" )
+            return ("True profit in Germany is: " + new_profit+ "EUR" )
         
         elif self.CountryID == "France":
-            str_profit = str(new_profit)
+            str_profit = str(true_profit)
             return ("True profit in France is: " + str_profit +" EUR")
         
         elif self.CountryID == "England":
@@ -36,8 +36,8 @@ class ProfitCalculation():
             return ("True profit in England is: " + profit_eng +" GBP")
         
         elif self.CountryID == "Greece":
-            str_profit = str(new_profit)
-            return ("True profit in Greece is: "+ true_profit + " EUR")
+            str_profit = str(true_profit)
+            return ("True profit in Greece is: "+ str_profit + " EUR")
         
         elif self.CountryID == "Russia":
             new_profit = str(true_profit * 77.0)
@@ -45,23 +45,25 @@ class ProfitCalculation():
         
         elif self.CountryID == "China":
             new_profit = str(true_profit*8.0)
-            return ("True profit in China is: " + new_profit + " CNY")
+            return ("True profit in China is: " + new_profit+ " CNY")
 
 
     def prof_calc_photovoltaic(self, photo_ob):
         #only selling within country of origin possible
-        selling_income = 100 * photo_ob.production* photo_ob.efficiency
+        selling_income = 100 * float(photo_ob.production) * float(photo_ob.efficiency)
         
         if photo_ob.ph_type == "Monocrystalline silicon":
             installation_cost = float(photo_ob.size) * 50.0
+        
         elif photo_ob.ph_type == "Amorphous silicon":
             installation_cost = float(photo_ob.size) * 100.0
+        
         elif photo_ob.ph_type == "Polymer and organic":
             installation_cost = float(photo_ob.size) * 25.0
         
         if self.CountryID == "USA":
             profit_usd = str((selling_income * 0.7) - installation_cost)
-            return ("True profit in America is: "+ profit_usd +" USD")
+            return ("True profit in America is: "+ profit_usd +"USD")
         
         elif self.CountryID == "Germany":
             new_profit = str((selling_income * 2.0) - installation_cost)
