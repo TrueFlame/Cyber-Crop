@@ -1040,6 +1040,7 @@ class AddCropGUI(tk.Frame):
         sensor_model_entry.configure(style = "Black.TEntry")
         
         ttk.Button(self, text = "Add Crop", command = add_crop).grid(row = 9, column = 1, padx = 5, pady = 5)
+        ttk.Button(self, text = " Return to Main Menu", command =lambda: master.switch_frame(UserMenuGUI)).grid(row = 10, column = 1, padx = 10, pady = 10)
         
 class AddPhotovoltaicGUI(tk.Frame):
     
@@ -1052,10 +1053,10 @@ class AddPhotovoltaicGUI(tk.Frame):
         def on_entry_click_photo_name(event):
             
             """function that gets called whenever entry is clicked"""
-            if sensor_model_entry.get() == "Give a name for your property...":
-                sensor_model_entry.delete(0, "end") # delete all the text in the entry
-                sensor_model_entry.insert(0, '') #Insert blank for user input
-                sensor_model_entry.configure(style = "Black.TEntry")
+            if photo_name_entry.get() == "Give a name for your property...":
+                photo_name_entry.delete(0, "end") # delete all the text in the entry
+                photo_name_entry.insert(0, '') #Insert blank for user input
+                photo_name_entry.configure(style = "Black.TEntry")
         
         def on_focusout_photo_name(event):
             if sensor_model_entry.get() == '':
@@ -1076,14 +1077,14 @@ class AddPhotovoltaicGUI(tk.Frame):
         def on_entry_click_efficiency(event):
             
             """function that gets called whenever entry is clicked"""
-            if size_entry.get() == 'PV efficiency...':
-                size_entry.delete(0, "end") # delete all the text in the entry
-                size_entry.insert(0, '') #Insert blank for user input
-                size_entry.configure(style = "Black.TEntry")
+            if efficiency_entry.get() == "PV efficiency...":
+                efficiency_entry.delete(0, "end") # delete all the text in the entry
+                efficiency_entry.insert(0, '') #Insert blank for user input
+                efficiency_entry.configure(style = "Black.TEntry")
         
         def on_focusout_efficiency(event):
             if size_entry.get() == '':
-                size_entry.insert(0, 'PV efficiency...')
+                size_entry.insert(0, "PV efficiency...")
         
         def on_entry_click_est_production(event):
             
@@ -1173,13 +1174,14 @@ class AddPhotovoltaicGUI(tk.Frame):
         expanse_select_label.grid(row = 2, column = 0, padx = 5, pady = 5)
         photo_type_label.grid(row = 3, column = 0, padx = 5, pady = 5)
         photo_name_label.grid(row = 4, column = 0, padx = 5, pady = 5)
-        est_production_label.grid(row = 4, column = 0, padx = 5, pady = 5)
-        efficiency_label.grid(row = 5, column = 0, padx = 5, pady = 5)
-        size_label.grid(row = 6, column = 0)
+        est_production_label.grid(row = 5, column = 0, padx = 5, pady = 5)
+        efficiency_label.grid(row = 6, column = 0, padx = 5, pady = 5)
+        size_label.grid(row = 7, column = 0)
         
         sensor_type_label.grid(row = 2, column = 2, padx = 5, pady = 5, sticky = tk.E)
         sensor_model_label.grid(row = 3, column = 2, padx = 5, pady = 5, sticky = tk.E)
         ################### entries
+        
         photo_name_entry = ttk.Entry(self, width = 25)
         est_production_entry = ttk.Entry(self, width = 25)
         efficiency_entry = ttk.Entry(self, width = 25)
@@ -1243,6 +1245,7 @@ class AddPhotovoltaicGUI(tk.Frame):
         sensor_model_entry.configure(style = "Black.TEntry")
         
         ttk.Button(self, text = "Add Photovoltaic", command = add_photovoltaic).grid(row = 8, column = 1, padx = 5, pady = 5)
+        ttk.Button(self, text = " Return to Main Menu", command =lambda: master.switch_frame(UserMenuGUI)).grid(row = 10, column = 1, padx = 10, pady = 10)
 
 class ProfitCalculationGUI(tk.Frame):
     
@@ -1352,7 +1355,7 @@ class ProfitCalculationGUI(tk.Frame):
         
         calculate_button = ttk.Button(self, text = "Calculate Profit", command = profit_calculation_func)
         calculate_button.grid(row = 6, column = 0)
-        
+        ttk.Button(self, text = "Return to Main Menu", command =lambda: master.switch_frame(UserMenuGUI)).grid(row = 9, column = 0)
         
 if __name__ == '__main__':
     CyberCrop().mainloop()
