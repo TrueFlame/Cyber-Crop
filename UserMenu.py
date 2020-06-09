@@ -1,6 +1,7 @@
 import tkinter as tk
 import pickle
 import pathlib
+import random
 
 #############################
 from tkinter import ttk
@@ -13,6 +14,7 @@ from Account import *
 from Expanse import *
 from Sensor import *
 from Profit_Calculation import *
+from help_popup import *
 
 ############################
 
@@ -585,13 +587,17 @@ class UserMenuGUI(tk.Frame):
         profit_calc_button = ttk.Button(self, text = "Profit Calculation", command = lambda: master.switch_frame(ProfitCalculationGUI))
         profit_calc_button.grid(row = 3, column = 1, padx = 5, pady = 5)
         
+       
+        
         if global_privillege == "Business":
             butt_upgrade.configure(state = "disabled")
         
         if global_privillege != "Business":
             profit_calc_button.configure(state = "disabled")
+            CreateHelpTip(profit_calc_button, text = "This option is only available in the Bussiness Version")
         
         file = pathlib.Path("areas_database.pkl")
+        
         if not file.exists():
             profit_calc_button.configure(state = "disabled")
         
@@ -609,6 +615,10 @@ class UserMenuGUI(tk.Frame):
                         counter_pv += 1
             if counter_crops == 0 and counter_pv == 0:
                 profit_calc_button.configure(state = "disabled")
+         
+        if global_privillege == "Amateur":
+            butt_expanse.configure(state = "disabled")
+            CreateHelpTip(butt_expanse, text = "This option is not available in the Amateur Version")
             
 class CustomerSupportGUI(tk.Frame):
     
@@ -674,7 +684,7 @@ class CustomerSupportGUI(tk.Frame):
         
         if global_privillege == "Amateur":
             customer_support_notebook.tab(2, state = "disabled")
-        
+
         if global_privillege == "Amateur":
             tk.Label(self, text = " Email and live chat are unavailable in the Amateur version.", background = "white", font = ("Arial",18, "bold")).grid(row = 3, column = 1)
         
@@ -703,10 +713,14 @@ class ExpanseGUI(tk.Frame):
         ttk.Button(self, text = "Add Expanse", command = lambda: master.switch_frame(AddExpanseGUI)).grid(row = 2, column = 1, padx = 5, pady = 5)
         crop_add = ttk.Button(self, text = "Add Crop", command = lambda: master.switch_frame(AddCropGUI))
         photo_add = ttk.Button(self, text = "Add Photovoltaic", command = lambda: master.switch_frame(AddPhotovoltaicGUI))
+        tips_button = ttk.Button(self, text = " Helpful Tips", command = lambda: master.switch_frame(HelpfulTipsGUI))
         
+        
+        tips_button.grid(row = 3, column = 1, padx = 5, pady = 5)
         crop_add.grid(row = 2, column = 2, padx = 5, pady = 5)
         photo_add.grid(row = 2, column = 3, padx = 5, pady = 5)
         ttk.Button(self, text="Go back to User Menu", command=lambda: master.switch_frame(UserMenuGUI)).grid(row = 5, column = 2, padx = 5, pady = 5)
+        
         
         ################## check if file exists, if not create it
         file = pathlib.Path("areas_database.pkl")
@@ -1380,6 +1394,65 @@ class ProfitCalculationGUI(tk.Frame):
         calculate_button = ttk.Button(self, text = "Calculate Profit", command = profit_calculation_func)
         calculate_button.grid(row = 10, column = 1, padx = 10, pady = 10)
         ttk.Button(self, text = "Return to Main Menu", command =lambda: master.switch_frame(UserMenuGUI)).grid(row = 11, column = 1, padx = 10, pady = 10)
+
+
+class HelpfulTipsGUI(tk.Frame):
+    def __init__(self, master):  
+        tk.Frame.__init__(self, master)
+        tk.Frame.configure(self,background='white')
+        
+        master.title("Cyber Crop - Helpful Tips")
+        
+        def get_tips():
+            
+            def clear():
+                tip_label.destroy()
+                another_button.destroy()
+            
+            crop_tip = crop_select.get()
+            
+            if crop_tip == "Strawberry":
+                straw_tips = ["Give them some space!", "Plant in a sunny area",  "Don’t drown the strawberries", "Plant a variety"]
+                rand_text = random.choice(straw_tips)
+                
+            elif crop_tip == "Eggplant":
+                egg_tips = ["Choose a very sunny spot for the best results.", "Eggplant grows best in a well-drained sandy loam or loam soil, fairly high in organic matter.", "Soil pH should be between 5.8 and 6.5 for best growth.", "Use a covering of black plastic mulch to warm soils before setting out transplants."]
+                rand_text = random.choice(egg_tips)
+                
+            elif crop_tip == "Orange":
+                orange_tips = ["Prune in spring or summer to shape plants", "Very sweet oranges need a long season of warm weather", "Pick when richly colored and fully ripe", "Grow outdoors in the warmer months to expose plants to heat and pollinators."]
+                rand_text = random.choice(orange_tips)
+                
+            elif crop_tip == "Green Pepper":
+                green_tips = ["Set pepper plant seedlings out after the last spring frost. They grow well in raised beds, containers, and in-ground gardens.", "Plant them 18 to 24 inches apart in a sunny, well-drained spot. Pepper plants need at least 6-8 hours of sunlight per day.", "Water immediately after planting, then regularly throughout the season. Aim for a total of 1-2 inches per week (more when it’s hotter).", "Spread mulch (such as chopped leaves or straw) around the plants to help keep the soil cool and moist."]
+                rand_text = random.choice(green_tips)
+                
+                
+            tip_label = tk.Label(self, text = rand_text, font = (18), background = "white")
+            tip_label.pack(padx = 10, pady = 10)
+            
+            another_button = ttk.Button(self, text = "Clear Result", command = clear)
+            another_button.pack(padx = 10, pady = 10, side = tk.BOTTOM)
+                
+        photo = ImageTk.PhotoImage(Image.open("logo.png"))
+        label1 = tk.Label(self, image = photo)
+        label1.image = photo # εχει προβληματα με το garbage disposal και γιαυτο κραταμε μια αναφορα στην εικόνα
+        label1.pack(padx = 5, pady = 5)
+        label1.configure(background = "white")    
+        
+        tk.Label(self, text="Helpful Tips", font=('Arial', 24, "bold"), background = "white").pack(padx = 5, pady = 5)
+        tk.Label(self, text = "Select Crop Type: ", background = "white").pack(padx = 10, pady = 10, side = tk.LEFT)
+        
+        types_of_crops = ["Strawberry", "Orange", "Green Pepper", "Eggplant"]
+        
+        crop_select = tk.StringVar()
+        
+        crop_tip_menu = ttk.OptionMenu(self, crop_select, types_of_crops[0], *types_of_crops)
+        crop_tip_menu.pack(padx = 10, pady = 10, side = tk.LEFT)
+        
+        ttk.Button(self, text = "Return to Expanse Menu", command = lambda: master.switch_frame(ExpanseGUI)).pack(padx = 10, pady = 10, side = tk.BOTTOM)
+        get_tip = ttk.Button(self, text = "Get Tip", command = get_tips)
+        get_tip.pack(padx = 10, pady = 10, side = tk.RIGHT)
         
 if __name__ == '__main__':
     CyberCrop().mainloop()
