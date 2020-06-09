@@ -97,4 +97,3 @@ def ChooseParameters(): #Επιλογή χώρας πώλησης και νομ�
     country = input("Select on of the above. \n")
     currency = country_and_currency.get(country)
     return country, currency
-
