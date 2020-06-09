@@ -616,9 +616,6 @@ class UserMenuGUI(tk.Frame):
             if counter_crops == 0 and counter_pv == 0:
                 profit_calc_button.configure(state = "disabled")
          
-        if global_privillege == "Amateur":
-            butt_expanse.configure(state = "disabled")
-            CreateHelpTip(butt_expanse, text = "This option is not available in the Amateur Version")
             
 class CustomerSupportGUI(tk.Frame):
     
@@ -710,17 +707,16 @@ class ExpanseGUI(tk.Frame):
         
         tk.Label(self, text="Expanse Options", font=('Helvetica', 28, "bold"), background = "white").grid(row = 1, column = 2,padx = 5, pady=5)
         
-        ttk.Button(self, text = "Add Expanse", command = lambda: master.switch_frame(AddExpanseGUI)).grid(row = 2, column = 1, padx = 5, pady = 5)
+        expanse_add = ttk.Button(self, text = "Add Expanse", command = lambda: master.switch_frame(AddExpanseGUI))
         crop_add = ttk.Button(self, text = "Add Crop", command = lambda: master.switch_frame(AddCropGUI))
         photo_add = ttk.Button(self, text = "Add Photovoltaic", command = lambda: master.switch_frame(AddPhotovoltaicGUI))
         tips_button = ttk.Button(self, text = " Helpful Tips", command = lambda: master.switch_frame(HelpfulTipsGUI))
         
-        
+        expanse_add.grid(row = 2, column = 1, padx = 5, pady = 5)
         tips_button.grid(row = 3, column = 1, padx = 5, pady = 5)
         crop_add.grid(row = 2, column = 2, padx = 5, pady = 5)
         photo_add.grid(row = 2, column = 3, padx = 5, pady = 5)
         ttk.Button(self, text="Go back to User Menu", command=lambda: master.switch_frame(UserMenuGUI)).grid(row = 5, column = 2, padx = 5, pady = 5)
-        
         
         ################## check if file exists, if not create it
         file = pathlib.Path("areas_database.pkl")
@@ -744,6 +740,14 @@ class ExpanseGUI(tk.Frame):
         if global_privillege == "Amateur":
             crop_add.configure(state = "disabled")
             photo_add.configure(state = "disabled")
+        
+        if global_privillege == "Amateur":
+            expanse_add.configure(state = "disabled")
+            CreateHelpTip(expanse_add, text = "This option is not available in the Amateur Version")
+            crop_add.configure(state = "disabled")
+            CreateHelpTip(crop_add, text = "This option is not available in the Amateur Version")
+            photo_add.configure(state = "disabled")
+            CreateHelpTip(photo_add, text = "This option is not available in the Amateur Version")
             
 class AddExpanseGUI(tk.Frame):
     
@@ -1265,7 +1269,7 @@ class AddPhotovoltaicGUI(tk.Frame):
         sensor_model_entry.configure(style = "Black.TEntry")
         
         ttk.Button(self, text = "Add Photovoltaic", command = add_photovoltaic).grid(row = 8, column = 1, padx = 5, pady = 5)
-        ttk.Button(self, text = " Return to Main Menu", command =lambda: master.switch_frame(UserMenuGUI)).grid(row = 10, column = 1, padx = 10, pady = 10)
+        ttk.Button(self, text = " Return to Main Menu", command =lambda: master.switch_frame(ExpanseGUI)).grid(row = 10, column = 1, padx = 10, pady = 10)
 
 class ProfitCalculationGUI(tk.Frame):
     
