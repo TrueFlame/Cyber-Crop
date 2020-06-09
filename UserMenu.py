@@ -1269,7 +1269,7 @@ class AddPhotovoltaicGUI(tk.Frame):
         sensor_model_entry.configure(style = "Black.TEntry")
         
         ttk.Button(self, text = "Add Photovoltaic", command = add_photovoltaic).grid(row = 8, column = 1, padx = 5, pady = 5)
-        ttk.Button(self, text = " Return to Main Menu", command =lambda: master.switch_frame(ExpanseGUI)).grid(row = 10, column = 1, padx = 10, pady = 10)
+        ttk.Button(self, text = " Return to Expanse Menu", command =lambda: master.switch_frame(ExpanseGUI)).grid(row = 10, column = 1, padx = 10, pady = 10)
 
 class ProfitCalculationGUI(tk.Frame):
     
